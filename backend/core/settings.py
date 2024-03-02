@@ -16,6 +16,7 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
+    "api",
     "users",
     "corsheaders",
     "rest_framework",
