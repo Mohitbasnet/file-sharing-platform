@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from .models import *
 from users.serializers import UserSerializer
+from typing import List, Dict, Any
 
 
 class OrganizationSerializer(ModelSerializer):
@@ -15,7 +16,7 @@ class OrganizationSerializer(ModelSerializer):
         model = Organization
         fields = ["id", "name", "created_at", "creator", "creator_id", "members"]
 
-    def get_members(self, obj):
+    def get_members(self, obj: Organization) -> List[Dict[str, Any]]:
         members = obj.members.all()
         return OrganizationMemberSerializer(members, many=True).data
 
@@ -61,3 +62,56 @@ class InvitationSerializer(ModelSerializer):
             "organization_id",
             "created_at",
         ]
+
+
+class FileSerializer(ModelSerializer):
+    user = UserSerializer(read_only=True)
+    organization = OrganizationSummarySerializer(read_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+    organization_id = serializers.PrimaryKeyRelatedField(
+        queryset=Organization.objects.all(),
+        source="organization",
+        write_only=True,
+        required=False,
+    )
+
+    class Meta:
+        model = File
+        fields = [
+            "id",
+            "user",
+            "file",
+            "file_name",
+            "file_type",
+            "file_path",
+            "created_at",
+            "is_private",
+            "organization",
+            "user_id",
+            "organization_id",
+            "is_trashed",
+            "created_at",
+        ]
+
+
+class FileSummarySerializer(ModelSerializer):
+    class Meta:
+        model = File
+        fields = ["id", "file", "file_name", "created_at", "is_private", "is_trashed"]
+
+
+class FavouriteSerializer(ModelSerializer):
+    user = UserSerializer(read_only=True)
+    file = FileSummarySerializer(read_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+    file_id = serializers.PrimaryKeyRelatedField(
+        queryset=File.objects.all(), source="file", write_only=True
+    )
+
+    class Meta:
+        model = Favourite
+        fields = ["id", "user", "file", "user_id", "file_id"]
