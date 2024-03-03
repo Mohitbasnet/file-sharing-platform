@@ -42,6 +42,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         upload_to="profile/",
         default="profile/default.jpg",
     )
+    is_organization = models.BooleanField(_("Is Organization"), default=False)
     is_active = models.BooleanField(_("Is Active"), default=True)
     is_staff = models.BooleanField(_("Is Staff"), default=False)
     created_at = models.DateTimeField(_("Created At"), default=timezone.now)

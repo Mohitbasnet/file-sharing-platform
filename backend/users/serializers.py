@@ -22,6 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "full_name",
             "profile_image",
+            "is_organization",
             "password",
         ]
 
