@@ -15,6 +15,9 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+    def can_change(self, user):
+        return user == self.creator
+
     def save(self, *args, **kwargs):
         super(Organization, self).save(*args, **kwargs)
         OrganizationMember.objects.create(
@@ -46,6 +49,9 @@ class OrganizationMember(models.Model):
     def __str__(self):
         return self.user.email
 
+    class Meta:
+        unique_together = ("user", "organization")
+
 
 class Invitation(models.Model):
     INVIATION_STATUS = (
@@ -73,6 +79,9 @@ class Invitation(models.Model):
             OrganizationMember.objects.create(
                 user=self.user, organization=self.organization
             )
+
+    class Meta:
+        unique_together = ("user", "organization")
 
 
 class File(models.Model):

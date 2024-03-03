@@ -53,8 +53,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["full_name"]
 
-    def can_change(self, request):
-        return request.user == self or request.user.is_superuser
+    def can_change(self, user):
+        return user == self or user.is_staff or user.is_superuser
 
     def __str__(self):
         return self.email
