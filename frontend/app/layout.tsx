@@ -3,6 +3,7 @@ import { Lexend } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { Toaster } from "sonner";
 
 const lexend = Lexend({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={lexend.className}>
+        <Toaster richColors closeButton position="top-right" />
         <Providers>
           <ThemeSwitcher />
           {children}
