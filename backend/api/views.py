@@ -14,9 +14,12 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         member = self.request.query_params.get("member", None)
+        queryset = Organization.objects.select_related("creator")
+
         if member == "yes":
-            return Organization.objects.filter(owner=self.request.user)
-        return Organization.objects.all()
+            queryset = queryset.filter(creator=self.request.user)
+
+        return queryset
 
 
 class OrganizationMemberViewSet(viewsets.ModelViewSet):
@@ -24,10 +27,13 @@ class OrganizationMemberViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationMemberSerializer
 
     def get_queryset(self):
-        org_id = self.request.query_params.get("org_id", None)
+        org_id = self.request.query_params.get("org_id")
+        queryset = OrganizationMember.objects.select_related("user", "organization")
+
         if org_id:
-            return OrganizationMember.objects.filter(organization__id=org_id)
-        return OrganizationMember.objects.all()
+            queryset = queryset.filter(organization__id=org_id)
+
+        return queryset
 
 
 class InvitationViewSet(viewsets.ModelViewSet):
@@ -35,17 +41,22 @@ class InvitationViewSet(viewsets.ModelViewSet):
     serializer_class = InvitationSerializer
 
     def get_queryset(self):
-        org_id = self.request.query_params.get("org_id", None)
-        my_invitations = self.request.query_params.get("my_invitations", None)
-        status = self.request.query_params.get("status", None)
-        if org_id:
-            return Invitation.objects.filter(organization__id=org_id)
-        if my_invitations == "true":
-            return Invitation.objects.filter(user=self.request.user)
-        if status:
-            return Invitation.objects.filter(status=status)
+        org_id = self.request.query_params.get("org_id")
+        my_invitations = self.request.query_params.get("my_invitations")
+        status = self.request.query_params.get("status")
 
-        return Invitation.objects.all()
+        queryset = Invitation.objects.select_related("user", "organization")
+
+        if org_id:
+            queryset = queryset.filter(organization__id=org_id)
+
+        if my_invitations == "true":
+            queryset = queryset.filter(user=self.request.user)
+
+        if status:
+            queryset = queryset.filter(status=status)
+
+        return queryset
 
 
 class FileViewSet(viewsets.ModelViewSet):
