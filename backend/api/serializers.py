@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from .models import *
-from users.serializers import UserSerializer
+from users.serializers import *
 from typing import List, Dict, Any
 
 
@@ -97,13 +97,24 @@ class FileSerializer(ModelSerializer):
 
 
 class FileSummarySerializer(ModelSerializer):
+    user = UserSummarySerializer(read_only=True)
+
     class Meta:
         model = File
-        fields = ["id", "file", "file_name", "created_at", "is_private", "is_trashed"]
+        fields = [
+            "id",
+            "file",
+            "user",
+            "file_name",
+            "file_type",
+            "created_at",
+            "is_private",
+            "is_trashed",
+        ]
 
 
 class FavouriteSerializer(ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = UserSummarySerializer(read_only=True)
     file = FileSummarySerializer(read_only=True)
     user_id = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(), source="user", write_only=True

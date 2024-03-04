@@ -4,8 +4,6 @@ from rest_framework.permissions import IsAuthenticated
 from users.permissions import CustomPermission
 from .serializers import *
 from .models import *
-from rest_framework.response import Response
-from rest_framework import status
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
@@ -61,11 +59,32 @@ class InvitationViewSet(viewsets.ModelViewSet):
 
 class FileViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = FileSerializer
     queryset = File.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return FileSummarySerializer
+        return FileSerializer
+
+    def get_queryset(self):
+        own = self.request.query_params.get("own", None)
+        org_id = self.request.query_params.get("org_id", None)
+        queryset = File.objects.select_related("user", "organization")
+
+        if own == "yes":
+            queryset = queryset.filter(user=self.request.user)
+
+        if org_id:
+            queryset = queryset.filter(organization__id=org_id)
+
+        return queryset
 
 
 class FavouriteViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = FavouriteSerializer
-    queryset = Favourite.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Favourite.objects.select_related("file", "user")
+        return queryset.filter(user=user)
