@@ -115,5 +115,8 @@ class Favourite(models.Model):
     file = models.ForeignKey(File, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def can_change(self, user):
+        return user == self.user
+
     def __str__(self):
         return self.file.file_name

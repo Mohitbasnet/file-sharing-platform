@@ -81,10 +81,13 @@ class FileViewSet(viewsets.ModelViewSet):
 
 
 class FavouriteViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, CustomPermission]
     serializer_class = FavouriteSerializer
 
     def get_queryset(self):
+        own = self.request.query_params.get("own", None)
         user = self.request.user
         queryset = Favourite.objects.select_related("file", "user")
-        return queryset.filter(user=user)
+        if own == "yes":
+            queryset = queryset.filter(user=user)
+        return queryset
