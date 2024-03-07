@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={lexend.className}>
         <Toaster richColors closeButton position="top-right" />
         <Providers>
-          <ThemeSwitcher />
+          {/* <ThemeSwitcher /> */}
           {children}
         </Providers>
       </body>

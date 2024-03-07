@@ -18,7 +18,7 @@ const ThemeSwitcher = () => {
   if (!mounted) return null;
 
   return (
-    <div className="absolute top-1 right-1 flex items-center justify-end gap-2 p-4">
+    <div>
       {theme === "light" ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"

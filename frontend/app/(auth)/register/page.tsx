@@ -4,12 +4,16 @@ import showToast from "@/lib/toastNotification";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const Register = () => {
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordConfirmation, setPasswordConfirmation] = React.useState("");
+
   const handleCreateAccount = async () => {
     if (!fullName || !email || !password || !passwordConfirmation) {
       return showToast("warning", "All fields are required.");
@@ -31,6 +35,10 @@ const Register = () => {
       });
       if (response.status === 201) {
         showToast("success", "Account created successfully.");
+        setFullName("");
+        setEmail("");
+        setPassword("");
+        setPasswordConfirmation("");
         setTimeout(() => {
           window.location.href = "/login";
         }, 2000);
@@ -46,6 +54,7 @@ const Register = () => {
       }
     }
   };
+
   return (
     <div className="bg-white dark:bg-gray-900">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -62,7 +71,7 @@ const Register = () => {
         <div className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
           <div className="max-w-xl lg:max-w-3xl">
             <div>
-              <h1 className="text-3xl text-indigo-800 dark:text-gray-200 font-bold">
+              <h1 className="text-3xl text-zinc-900 dark:text-gray-200 font-bold">
                 Join KeepSafe today
               </h1>
               <p className="mt-2">
@@ -77,94 +86,72 @@ const Register = () => {
               onSubmit={(e) => e.preventDefault()}
             >
               <div className="col-span-6">
-                <label
-                  htmlFor="FullName"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-100"
-                >
-                  Full Name
-                </label>
-
-                <input
+                <Label htmlFor="FullName">Full Name</Label>
+                <Input
                   onChange={(e) => setFullName(e.target.value)}
                   type="text"
                   id="FullName"
                   name="full_name"
-                  className="w-full py-2 px-2 mt-1 ring-1 rounded ring-gray-200 focus:ring-indigo-600 active:ring-indigo-600 dark:ring-gray-400"
+                  placeholder="Full Name"
                 />
               </div>
 
               <div className="col-span-6">
-                <label
-                  htmlFor="Email"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-100"
-                >
-                  {" "}
-                  Email{" "}
-                </label>
-
-                <input
+                <Label htmlFor="Email">Email</Label>
+                <Input
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   id="Email"
                   name="email"
-                  className="w-full py-2 px-2 mt-1 ring-1 rounded ring-gray-200 focus:ring-indigo-600 active:ring-indigo-600 dark:ring-gray-400"
+                  placeholder="Email"
                 />
               </div>
 
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="Password"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-100"
-                >
-                  {" "}
-                  Password{" "}
-                </label>
-
-                <input
+                <Label htmlFor="Password">Password</Label>
+                <Input
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
                   id="Password"
                   name="password"
-                  className="w-full py-2 px-2 mt-1 ring-1 rounded ring-gray-200 focus:ring-indigo-600 active:ring-indigo-600 dark:ring-gray-400"
+                  placeholder="Password"
                 />
               </div>
 
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="PasswordConfirmation"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-100"
-                >
+                <Label htmlFor="PasswordConfirmation">
                   Password Confirmation
-                </label>
-
-                <input
+                </Label>
+                <Input
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
                   type="password"
                   id="PasswordConfirmation"
                   name="password_confirmation"
-                  className="w-full py-2 px-2 mt-1 ring-1 rounded ring-gray-200 focus:ring-indigo-600 active:ring-indigo-600 dark:ring-gray-400"
+                  placeholder="Password Confirmation"
                 />
               </div>
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <button
+                <Button
                   onClick={handleCreateAccount}
-                  className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-gray-100 transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                  className="w-full dark:bg-slate-300"
+                  type="button"
+                  size={"lg"}
                 >
-                  Create an account
-                </button>
-
-                <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                  Already have an account?
-                  <Link href="/login">
-                    <span className="ml-1 text-gray-700 dark:text-gray-100 underline">
-                      Log in
-                    </span>
-                  </Link>
-                  .
-                </p>
+                  Create Account
+                </Button>
               </div>
             </form>
+            <p className="pt-4 text-sm text-gray-500 sm:mt-0">
+              Already have an account?
+              <Link href="/login">
+                <span className="text-indigo-800 dark:text-indigo-400">
+                  {" "}
+                  Login
+                </span>
+              </Link>
+              .
+            </p>
           </div>
         </div>
       </div>

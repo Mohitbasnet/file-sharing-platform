@@ -1,9 +1,19 @@
+import Footer from "@/components/elements/Footer";
+import Header from "@/components/elements/Header";
+import HeroSection from "@/components/elements/HeroSection";
+import Pricing from "@/components/elements/Pricing";
+import StatComponent from "@/components/elements/StatComponent";
+import Testimonials from "@/components/elements/Testimonials";
+
 export default function Home() {
   return (
-    <main className="bg-white dark:bg-black min-h-screen">
-      <h1 className="text-black dark:text-white text-5xl font-bold p-4">
-        Hello World
-      </h1>
+    <main>
+      <Header />
+      <HeroSection />
+      <StatComponent />
+      <Pricing />
+      <Testimonials />
+      <Footer />
     </main>
   );
 }
