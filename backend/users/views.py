@@ -8,7 +8,7 @@ from .permissions import CustomPermission
 
 
 class UserViewSet(ModelViewSet):
-    permission_classes = [CustomPermission, IsAuthenticated]
+    permission_classes = [CustomPermission]
     serializer_class = UserSerializer
 
     def get_queryset(self):
