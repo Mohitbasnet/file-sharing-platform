@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import showToast from "@/lib/toastNotification";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -18,7 +18,9 @@ const Login = () => {
     <section className="bg-white dark:bg-gray-900">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
         <section className="hidden md:flex relative h-32 items-end bg-gray-900 dark:bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
-          <img
+          <Image
+            width={1920}
+            height={1080}
             alt=""
             src="/assets/login.jpg"
             className="absolute inset-0 h-full w-full object-cover opacity-80"

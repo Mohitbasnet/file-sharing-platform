@@ -1,6 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
+import { apiRegister } from "@/lib/apiRequests";
 import showToast from "@/lib/toastNotification";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -9,7 +10,7 @@ const Register = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordConfirmation, setPasswordConfirmation] = React.useState("");
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
     if (!fullName || !email || !password || !passwordConfirmation) {
       return showToast("warning", "All fields are required.");
     }
@@ -22,20 +23,43 @@ const Register = () => {
     if (password !== passwordConfirmation) {
       return showToast("warning", "Passwords do not match.");
     }
-    showToast("success", "Account created successfully.");
+    try {
+      const response = await apiRegister({
+        email,
+        full_name: fullName,
+        password,
+      });
+      if (response.status === 201) {
+        showToast("success", "Account created successfully.");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 2000);
+      }
+      if (response.status === 400) {
+        showToast("error", "Email already exists.");
+      }
+    } catch (error: any) {
+      if (error?.response?.data?.email[0].length > 0) {
+        showToast("error", error?.response?.data?.email[0]);
+      } else {
+        showToast("error", "Something went wrong. Please try again later.");
+      }
+    }
   };
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <div className="bg-white dark:bg-gray-900">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <section className="hidden md:flex relative h-32 items-end bg-gray-900 dark:bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
-          <img
+        <div className="hidden md:flex relative h-32 items-end bg-gray-900 dark:bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+          <Image
+            width={1920}
+            height={1080}
             alt=""
             src="/assets/register.jpg"
             className="absolute inset-0 h-full w-full object-cover opacity-80"
           />
-        </section>
+        </div>
 
-        <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+        <div className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
           <div className="max-w-xl lg:max-w-3xl">
             <div>
               <h1 className="text-3xl text-indigo-800 dark:text-gray-200 font-bold">
@@ -142,9 +166,9 @@ const Register = () => {
               </div>
             </form>
           </div>
-        </main>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
