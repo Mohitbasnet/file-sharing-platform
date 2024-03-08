@@ -8,6 +8,7 @@ import {
   HiMiniBars3CenterLeft,
   HiMiniArrowDownTray,
   HiEllipsisVertical,
+  HiOutlineClipboard,
 } from "react-icons/hi2";
 
 import {
@@ -47,7 +48,6 @@ function FileView({ file, view }: FileViewProps) {
         file_id: id,
         user_id: localStorage.getItem("user_id"),
       });
-      console.log(res);
       if (res.status === 200) {
         showToast("success", "File added to favourites.");
         queryClient.invalidateQueries("user" as InvalidateQueryFilters);
@@ -80,7 +80,7 @@ function FileView({ file, view }: FileViewProps) {
   return (
     <div>
       {view === "grid" ? (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {file?.map((f: any) => {
             if (f.is_trashed) return null;
             return (
@@ -101,6 +101,18 @@ function FileView({ file, view }: FileViewProps) {
                         <HiEllipsisVertical className="text-xl" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
+                        {!f.is_private && (
+                          <DropdownMenuItem
+                            className="flex items-center gap-2 hover:bg-gray-100"
+                            onClick={() => {
+                              navigator.clipboard.writeText(f.file);
+                              showToast("success", "Link copied to clipboard");
+                            }}
+                          >
+                            <HiOutlineClipboard className="text-lg" />
+                            <span>Copy Link</span>
+                          </DropdownMenuItem>
+                        )}
                         <DropdownMenuItem
                           className="flex items-center gap-2 hover:bg-gray-100"
                           onClick={() => handleAddToFavourite(f.id)}

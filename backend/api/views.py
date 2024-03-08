@@ -9,6 +9,7 @@ from .models import *
 class OrganizationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, CustomPermission]
     serializer_class = OrganizationSerializer
+    lookup_field = "slug"
 
     def get_queryset(self):
         member = self.request.query_params.get("member", None)

@@ -36,7 +36,7 @@ export const apiAddFile = async (data: any) => {
     formData.append("user_id", data.user_id);
     formData.append("file", data.file);
     formData.append("file_name", data.file_name);
-    formData.append("is_private", "false");
+    formData.append("is_private", data.is_private);
 
     const response = await axios.post(
       ENDPOINTS.file,

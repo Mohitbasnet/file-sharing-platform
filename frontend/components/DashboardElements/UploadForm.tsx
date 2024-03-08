@@ -21,7 +21,7 @@ const UploadForm = () => {
   const queryClient = useQueryClient();
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPrivate, setIsPrivate] = useState(true);
 
   const handleFileChange = (e: any) => {
     const selectedFile = e.target.files[0];
@@ -29,7 +29,7 @@ const UploadForm = () => {
   };
 
   const handleSwitchChange = () => {
-    setIsPublic((prevIsPublic) => !prevIsPublic);
+    setIsPrivate((previsPrivate) => !previsPrivate);
   };
 
   const handleUpload = async () => {
@@ -46,7 +46,7 @@ const UploadForm = () => {
       const response = await apiAddFile({
         user_id: localStorage.getItem("user_id"),
         file_name: fileName,
-        is_private: !isPublic,
+        is_private: isPrivate,
         file,
       });
       if (response.id) {
@@ -99,7 +99,7 @@ const UploadForm = () => {
                 <div className="flex items-center gap-1.5">
                   <Label>Public</Label>
                   <Switch
-                    checked={isPublic}
+                    checked={isPrivate}
                     onCheckedChange={handleSwitchChange}
                   />
                   <Label>Private</Label>

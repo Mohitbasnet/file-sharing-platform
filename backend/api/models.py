@@ -2,6 +2,7 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from users.models import CustomUser as User
 import shortuuid
+from django.utils.text import slugify
 
 
 class Organization(models.Model):
@@ -9,6 +10,7 @@ class Organization(models.Model):
         _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
     )
     name = models.CharField(_("Name"), max_length=255)
+    slug = models.SlugField(_("Slug"), max_length=255, blank=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     creator = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -19,6 +21,7 @@ class Organization(models.Model):
         return user == self.creator
 
     def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
         super(Organization, self).save(*args, **kwargs)
         OrganizationMember.objects.create(
             user=self.creator, organization=self, role="admin"

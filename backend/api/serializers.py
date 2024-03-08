@@ -14,7 +14,15 @@ class OrganizationSerializer(ModelSerializer):
 
     class Meta:
         model = Organization
-        fields = ["id", "name", "created_at", "creator", "creator_id", "members"]
+        fields = [
+            "id",
+            "name",
+            "created_at",
+            "creator",
+            "creator_id",
+            "members",
+            "slug",
+        ]
 
     def get_members(self, obj: Organization) -> List[Dict[str, Any]]:
         members = obj.members.all()
@@ -24,7 +32,7 @@ class OrganizationSerializer(ModelSerializer):
 class OrganizationSummarySerializer(ModelSerializer):
     class Meta:
         model = Organization
-        fields = ["id", "name", "created_at"]
+        fields = ["id", "name", "created_at", "slug"]
 
 
 class OrganizationMemberSerializer(ModelSerializer):
