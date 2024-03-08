@@ -49,6 +49,7 @@ const Login = () => {
         const decodedToken = jwtDecode<DecodedToken>(access);
         const { user_id } = decodedToken;
         localStorage.setItem("user_id", user_id);
+        localStorage.setItem("access", access);
         window.location.href = "/dashboard";
       }
     } catch (error: any) {

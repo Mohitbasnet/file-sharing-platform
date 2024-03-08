@@ -71,7 +71,7 @@ class FileViewSet(viewsets.ModelViewSet):
         org_id = self.request.query_params.get("org_id", None)
         queryset = File.objects.select_related("user", "organization")
 
-        if own == "yes":
+        if own == "true":
             queryset = queryset.filter(user=self.request.user)
 
         if org_id:

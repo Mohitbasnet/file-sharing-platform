@@ -89,12 +89,14 @@ class File(models.Model):
         _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    file = models.FileField(_("File"), upload_to="files/")
+    file = models.FileField(_("File"), upload_to="files/", unique=True)
     file_name = models.CharField(_("File Name"), max_length=255)
     file_path = models.CharField(_("File Path"), max_length=455, blank=True)
     file_type = models.CharField(_("File Type"), max_length=255, blank=True)
     is_private = models.BooleanField(_("Is Private"), default=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
+    organization = models.ForeignKey(
+        Organization, on_delete=models.CASCADE, null=True, blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     is_trashed = models.BooleanField(_("Is Trashed"), default=False)
 
