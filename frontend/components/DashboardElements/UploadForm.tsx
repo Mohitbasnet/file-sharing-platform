@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -18,7 +19,7 @@ import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
 
 const UploadForm = () => {
   const queryClient = useQueryClient();
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
   const [isPublic, setIsPublic] = useState(true);
 
@@ -36,7 +37,11 @@ const UploadForm = () => {
       showToast("error", "Please fill all the fields and select a file.");
       return;
     }
-
+    const fileSizeInMB = file.size / (1024 * 1024);
+    if (fileSizeInMB > 25) {
+      showToast("error", "File size exceeds the limit of 25 MB.");
+      return;
+    }
     try {
       const response = await apiAddFile({
         user_id: localStorage.getItem("user_id"),
@@ -101,9 +106,15 @@ const UploadForm = () => {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button className="w-fit" size={"lg"} onClick={handleUpload}>
-                    Upload
-                  </Button>
+                  <DialogClose>
+                    <Button
+                      className="w-fit"
+                      size={"lg"}
+                      onClick={handleUpload}
+                    >
+                      Upload
+                    </Button>
+                  </DialogClose>
                 </div>
               </div>
             </form>

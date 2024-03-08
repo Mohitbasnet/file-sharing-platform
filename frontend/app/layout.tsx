@@ -20,11 +20,8 @@ export default function RootLayout({
   return (
     <html>
       <body className={lexend.className}>
-        <Toaster richColors closeButton position="top-right" />
-        <Providers>
-          {/* <ThemeSwitcher /> */}
-          {children}
-        </Providers>
+        <Toaster richColors closeButton position="bottom-right" />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

@@ -15,7 +15,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         queryset = Organization.objects.select_related("creator")
 
         if member == "yes":
-            queryset = queryset.filter(creator=self.request.user)
+            queryset = queryset.filter(members__user=self.request.user)
 
         return queryset
 

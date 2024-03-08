@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
-import { apiUpdateFile } from "@/lib/apiRequests";
+import { apiDeleteFile, apiUpdateFile } from "@/lib/apiRequests";
 import showToast from "@/lib/toastNotification";
 
 interface TrashViewProps {
@@ -27,8 +27,18 @@ interface TrashViewProps {
 
 function TrashView({ file }: TrashViewProps) {
   const queryClient = useQueryClient();
-  const deletePermanantly = (id: string) => {
-    console.log(id);
+  const deletePermanantly = async (id: string) => {
+    try {
+      const res = await apiDeleteFile(id);
+      if (res.status === 204 && res.statusText === "No Content") {
+        showToast("success", "File deleted permanently.");
+        queryClient.invalidateQueries("user" as InvalidateQueryFilters);
+      } else {
+        showToast("error", "Failed to delete file permanently.");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   const restoreFile = async (id: string) => {
     try {
@@ -45,7 +55,7 @@ function TrashView({ file }: TrashViewProps) {
   };
   return (
     <div>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {file?.map((f: any) => {
           if (!f.is_trashed) return null;
           return (
@@ -55,7 +65,8 @@ function TrashView({ file }: TrashViewProps) {
                   <span>
                     <HiMiniBars3CenterLeft className="text-lg" />
                   </span>
-                  <span>{f.file_name}</span>
+                  {f.file_name.slice(0, 22)}
+                  {f.file_name.length > 22 ? "..." : ""}
                 </div>
                 <div className="cursor-pointer">
                   <DropdownMenu>

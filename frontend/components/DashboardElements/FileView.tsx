@@ -31,7 +31,7 @@ import {
   useQueryClient,
   InvalidateQueryFilters,
 } from "@tanstack/react-query";
-import { apiUpdateFile } from "@/lib/apiRequests";
+import { apiAddFavorite, apiUpdateFile } from "@/lib/apiRequests";
 import showToast from "@/lib/toastNotification";
 
 interface FileViewProps {
@@ -41,8 +41,28 @@ interface FileViewProps {
 
 function FileView({ file, view }: FileViewProps) {
   const queryClient = useQueryClient();
-  const handleAddToFavourite = (id: string) => {
-    console.log(id);
+  const handleAddToFavourite = async (id: string) => {
+    try {
+      const res = await apiAddFavorite({
+        file_id: id,
+        user_id: localStorage.getItem("user_id"),
+      });
+      console.log(res);
+      if (res.status === 200) {
+        showToast("success", "File added to favourites.");
+        queryClient.invalidateQueries("user" as InvalidateQueryFilters);
+      } else {
+        showToast("error", "Failed to add file to favourites.");
+      }
+    } catch (error: any) {
+      if (
+        error.response.data.non_field_errors[0] ===
+        "The fields user_id, file_id must make a unique set."
+      ) {
+        showToast("error", "File already in favourites");
+      }
+      return;
+    }
   };
   const handleAddToTrash = async (id: string) => {
     try {
@@ -60,7 +80,7 @@ function FileView({ file, view }: FileViewProps) {
   return (
     <div>
       {view === "grid" ? (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {file?.map((f: any) => {
             if (f.is_trashed) return null;
             return (
@@ -70,7 +90,10 @@ function FileView({ file, view }: FileViewProps) {
                     <span>
                       <HiMiniBars3CenterLeft className="text-lg" />
                     </span>
-                    <span>{f.file_name}</span>
+                    <span>
+                      {f.file_name.slice(0, 22)}
+                      {f.file_name.length > 22 ? "..." : ""}
+                    </span>
                   </div>
                   <div className="cursor-pointer">
                     <DropdownMenu>
@@ -122,7 +145,6 @@ function FileView({ file, view }: FileViewProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Index</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Uploaded On</TableHead>
@@ -130,11 +152,10 @@ function FileView({ file, view }: FileViewProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {file?.map((f: any, index: number) => {
+            {file?.map((f: any) => {
               if (f.is_trashed) return null;
               return (
                 <TableRow key={f.id}>
-                  <TableCell>{index + 1}</TableCell>
                   <TableCell className="capitalize">{f.file_name}</TableCell>
                   <TableCell className="uppercase">{f.file_type}</TableCell>
                   <TableCell>{convertTime(f.created_at)}</TableCell>

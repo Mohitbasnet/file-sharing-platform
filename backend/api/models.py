@@ -106,6 +106,12 @@ class File(models.Model):
     def save(self, *args, **kwargs):
         self.file_path = self.file.url
         self.file_type = self.file.name.split(".")[-1]
+
+        if self.is_trashed:
+            fav = Favourite.objects.filter(file=self)
+            if fav.exists():
+                fav.delete()
+
         super(File, self).save(*args, **kwargs)
 
 
@@ -122,3 +128,6 @@ class Favourite(models.Model):
 
     def __str__(self):
         return self.file.file_name
+
+    class Meta:
+        unique_together = ("user", "file")

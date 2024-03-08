@@ -2,9 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import UploadForm from "@/components/DashboardElements/UploadForm";
-import SelectBox from "@/components/DashboardElements/SelectBox";
-import ViewSwitch from "@/components/DashboardElements/ViewSwitch";
 import { useQuery } from "@tanstack/react-query";
 import { apiGetFiles } from "@/lib/apiRequests";
 import Spinner from "@/components/DashboardElements/Spinner";
@@ -57,7 +54,10 @@ const Trash = () => {
             Search
           </Button>
         </form>
-        <UploadForm />
+      </div>
+      <div className="my-3 text-gray-500">
+        Files in trash are deleted after 30 days. You can safely restore them
+        before that.
       </div>
       <div className="mt-8">
         <TrashView file={filteredFiles || files?.data} />
