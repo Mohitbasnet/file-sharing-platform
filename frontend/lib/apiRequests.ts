@@ -70,3 +70,6 @@ export const apiRemoveFavorite = (id: string) =>
 
 export const apiGetOrganizations = () =>
   axios.get(`${ENDPOINTS.organization}?member=yes`, createHeaders());
+
+export const apiGetOrganization = (slug: string) =>
+  axios.get(`${ENDPOINTS.organization}${slug}/`, createHeaders());

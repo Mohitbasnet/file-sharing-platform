@@ -1,17 +1,5 @@
 import React from "react";
-import {
-  HiMiniBars3CenterLeft,
-  HiOutlineStar,
-  HiOutlineTrash,
-  HiMiniUserCircle,
-  HiEllipsisVertical,
-} from "react-icons/hi2";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { HiMiniBars3CenterLeft } from "react-icons/hi2";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,35 +20,31 @@ const OrganizationView = ({ organization }: OrganizationViewProps) => {
                 </span>
                 <span>{org.name}</span>
               </div>
-              <div className="cursor-pointer">
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <HiEllipsisVertical className="text-xl" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem className="flex items-center gap-2 hover:bg-gray-100">
-                      <HiOutlineStar className="text-lg" />
-                      <span>Favourites</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="flex items-center gap-2 hover:bg-red-100">
-                      <HiOutlineTrash className="text-lg" />
-                      <span>Trash</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
             </div>
-            <div className="w-full h-40 bg-gray-200 my-4 rounded-xl"></div>
-            <div className="flex justify-between items-center gap-2">
-              <p className="flex items-center gap-2">
-                <Image
-                  height={40}
-                  width={40}
-                  src={org.creator.profile_image}
-                  alt=""
-                />
-                <span className="capitalize">{org.creator.full_name}</span>
-              </p>
+            <div className="w-full h-40  bg-gray-200 my-4 rounded-xl dark:bg-gray-700 flex items-center justify-center">
+              <span className="text-4xl">T</span>
+            </div>
+            <div>
+              <div className="flex justify-between items-center gap-2">
+                <p className="flex items-center gap-1">
+                  <Image
+                    className="rounded-full"
+                    height={40}
+                    width={40}
+                    src={org.creator.profile_image}
+                    alt=""
+                  />
+                  <span className="capitalize">{org.creator.full_name}</span>
+                </p>
+                <div className="flex items-center gap-2">
+                  <p className="h-2 w-2 bg-green-500 rounded-full"></p>
+                  <p>
+                    {org.creator.id === localStorage.getItem("user_id")
+                      ? "Founder"
+                      : "Member"}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </Link>

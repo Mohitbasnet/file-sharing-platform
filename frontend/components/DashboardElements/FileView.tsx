@@ -34,6 +34,7 @@ import {
 } from "@tanstack/react-query";
 import { apiAddFavorite, apiUpdateFile } from "@/lib/apiRequests";
 import showToast from "@/lib/toastNotification";
+import Image from "next/image";
 
 interface FileViewProps {
   file: any;
@@ -84,7 +85,10 @@ function FileView({ file, view }: FileViewProps) {
           {file?.map((f: any) => {
             if (f.is_trashed) return null;
             return (
-              <div key={f.id} className="border p-4 rounded-lg">
+              <div
+                key={f.id}
+                className="border p-4 rounded-lg cursor-pointer hover:shadow-lg transition duration-300"
+              >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span>
@@ -131,7 +135,19 @@ function FileView({ file, view }: FileViewProps) {
                     </DropdownMenu>
                   </div>
                 </div>
-                <div className="w-full h-40 bg-gray-200 my-4 rounded-xl"></div>
+                {["jpg", "png", "jpeg", "webp"].includes(
+                  f.file_type.toLowerCase()
+                ) ? (
+                  <Image
+                    height={180}
+                    width={180}
+                    src={f.file}
+                    alt={f.file_name}
+                    className="w-full h-40 my-4 rounded-xl object-cover border p-1"
+                  />
+                ) : (
+                  <div className="w-full h-40 bg-gray-200 dark:bg-zinc-800 my-4 rounded-xl"></div>
+                )}
                 <div className="flex justify-between items-center gap-2">
                   <p className="flex items-center gap-2">
                     <span>
