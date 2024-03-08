@@ -181,7 +181,7 @@ function FileView({ file, view }: FileViewProps) {
           </TableHeader>
           <TableBody>
             {file?.map((f: any) => {
-              if (f.is_trashed) return null;
+              if (f.is_trashed || f.organization) return null;
               return (
                 <TableRow key={f.id}>
                   <TableCell className="capitalize">{f.file_name}</TableCell>

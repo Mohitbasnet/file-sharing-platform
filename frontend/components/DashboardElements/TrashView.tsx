@@ -57,7 +57,7 @@ function TrashView({ file }: TrashViewProps) {
     <div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {file?.map((f: any) => {
-          if (!f.is_trashed) return null;
+          if (!f.is_trashed || f.organization) return null;
           return (
             <div key={f.id} className="border p-4 rounded-lg">
               <div className="flex items-center justify-between">

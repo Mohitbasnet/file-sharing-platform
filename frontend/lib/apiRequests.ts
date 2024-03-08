@@ -36,7 +36,9 @@ export const apiAddFile = async (data: any) => {
     formData.append("user_id", data.user_id);
     formData.append("file", data.file);
     formData.append("file_name", data.file_name);
-    formData.append("is_private", data.is_private);
+    if (data.is_private) formData.append("is_private", data.is_private);
+    if (data.organization_id)
+      formData.append("organization_id", data.organization_id);
 
     const response = await axios.post(
       ENDPOINTS.file,
@@ -51,7 +53,7 @@ export const apiAddFile = async (data: any) => {
 };
 
 export const apiGetFiles = () =>
-  axios.get(`${ENDPOINTS.file}?own=true`, createHeaders());
+  axios.get(`${ENDPOINTS.file}?own=yes`, createHeaders());
 
 export const apiUpdateFile = (data: any) =>
   axios.patch(`${ENDPOINTS.file}${data.id}/`, data, createHeaders());
@@ -73,3 +75,6 @@ export const apiGetOrganizations = () =>
 
 export const apiGetOrganization = (slug: string) =>
   axios.get(`${ENDPOINTS.organization}${slug}/`, createHeaders());
+
+export const getFilesOfOrganization = (org_id: string) =>
+  axios.get(`${ENDPOINTS.file}?org_id=${org_id}`, createHeaders());

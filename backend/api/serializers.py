@@ -106,6 +106,7 @@ class FileSerializer(ModelSerializer):
 
 class FileSummarySerializer(ModelSerializer):
     user = UserSummarySerializer(read_only=True)
+    organization = OrganizationSummarySerializer(read_only=True)
 
     class Meta:
         model = File
@@ -118,6 +119,7 @@ class FileSummarySerializer(ModelSerializer):
             "created_at",
             "is_private",
             "is_trashed",
+            "organization",
         ]
 
 

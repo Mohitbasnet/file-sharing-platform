@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from users.permissions import CustomPermission
 from .serializers import *
 from .models import *
+from django.db.models import Q
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
@@ -72,8 +73,8 @@ class FileViewSet(viewsets.ModelViewSet):
         org_id = self.request.query_params.get("org_id", None)
         queryset = File.objects.select_related("user", "organization")
 
-        if own == "true":
-            queryset = queryset.filter(user=self.request.user)
+        if own == "yes":
+            queryset = queryset.filter(Q(organization=None) & Q(user=self.request.user))
 
         if org_id:
             queryset = queryset.filter(organization__id=org_id)
