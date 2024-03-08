@@ -1,4 +1,38 @@
 import React from "react";
+import convertTime from "@/lib/timeAgo";
+
+import {
+  HiOutlineInformationCircle,
+  HiOutlineStar,
+  HiOutlineTrash,
+  HiMiniBars3CenterLeft,
+  HiMiniArrowDownTray,
+  HiEllipsisVertical,
+} from "react-icons/hi2";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "../ui/button";
+import {
+  useQuery,
+  useQueryClient,
+  InvalidateQueryFilters,
+} from "@tanstack/react-query";
+import { apiUpdateFile } from "@/lib/apiRequests";
+import showToast from "@/lib/toastNotification";
 
 interface FileViewProps {
   file: any;
@@ -6,72 +40,128 @@ interface FileViewProps {
 }
 
 function FileView({ file, view }: FileViewProps) {
+  const queryClient = useQueryClient();
+  const handleAddToFavourite = (id: string) => {
+    console.log(id);
+  };
+  const handleAddToTrash = async (id: string) => {
+    try {
+      const res = await apiUpdateFile({ id, is_trashed: true });
+      if (res.status === 200) {
+        showToast("success", "File moved to trash. You can restore it later.");
+        queryClient.invalidateQueries("user" as InvalidateQueryFilters);
+      } else {
+        showToast("error", "Failed to move file to trash.");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
-    <div className="grid grid-cols-4 gap-4">
-      {file?.map((f: any) => {
-        return (
-          <div key={f.id} className="border p-4 rounded-lg">
-            <div className="flex items-center justify-between">
-              <p className="flex gap-3">
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
-                    />
-                  </svg>
-                </span>
-                <span>{f.file_name}</span>
-              </p>
-              <p className="cursor-pointer">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div className="w-full h-40 bg-gray-200 my-4 rounded-xl"></div>
-            <div className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                />
-              </svg>
-              <span>
-                <span className="uppercase"> {f.file_type} </span>
-                file
-              </span>
-            </div>
-          </div>
-        );
-      })}
+    <div>
+      {view === "grid" ? (
+        <div className="grid grid-cols-4 gap-4">
+          {file?.map((f: any) => {
+            if (f.is_trashed) return null;
+            return (
+              <div key={f.id} className="border p-4 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span>
+                      <HiMiniBars3CenterLeft className="text-lg" />
+                    </span>
+                    <span>{f.file_name}</span>
+                  </div>
+                  <div className="cursor-pointer">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <HiEllipsisVertical className="text-xl" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem
+                          className="flex items-center gap-2 hover:bg-gray-100"
+                          onClick={() => handleAddToFavourite(f.id)}
+                        >
+                          <HiOutlineStar className="text-lg" />
+                          <span>Favourites</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="flex items-center gap-2 hover:bg-red-100"
+                          onClick={() => handleAddToTrash(f.id)}
+                        >
+                          <HiOutlineTrash className="text-lg" />
+                          <span>Trash</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </div>
+                <div className="w-full h-40 bg-gray-200 my-4 rounded-xl"></div>
+                <div className="flex justify-between items-center gap-2">
+                  <p className="flex items-center gap-2">
+                    <span>
+                      <HiOutlineInformationCircle className="text-lg" />
+                    </span>
+                    <span>
+                      <span className="uppercase"> {f.file_type} </span>
+                      file
+                    </span>
+                  </p>
+                  <p>
+                    <span>
+                      <HiMiniArrowDownTray className="text-lg" />
+                    </span>
+                    <span>{f.file_size}</span>
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Index</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Uploaded On</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {file?.map((f: any, index: number) => {
+              if (f.is_trashed) return null;
+              return (
+                <TableRow key={f.id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell className="capitalize">{f.file_name}</TableCell>
+                  <TableCell className="uppercase">{f.file_type}</TableCell>
+                  <TableCell>{convertTime(f.created_at)}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => handleAddToFavourite(f.id)}
+                      >
+                        <HiOutlineStar className="text-lg" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => handleAddToTrash(f.id)}
+                      >
+                        <HiOutlineTrash className="text-lg" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      )}
     </div>
   );
 }

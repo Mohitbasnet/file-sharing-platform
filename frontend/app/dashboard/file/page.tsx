@@ -14,12 +14,7 @@ const File = () => {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("All Files");
   const [view, setView] = useState("grid");
-
-  // useEffect(() => {
-  //   console.log("query", query);
-  //   console.log("type", type);
-  //   console.log("view", view);
-  // }, [query, type, view]);
+  const [filteredFiles, setFilteredFiles] = useState(null);
 
   const {
     isLoading,
@@ -30,21 +25,39 @@ const File = () => {
     queryFn: () => apiGetFiles(),
   });
 
+  useEffect(() => {
+    setFilteredFiles(files?.data);
+    if (query.length === 0) setFilteredFiles(files?.data);
+  }, [files, query]);
+
   isLoading && <Spinner />;
+
+  const handleSearch = () => {
+    const filteredFiles = files?.data.filter((file: any) =>
+      file.file_name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredFiles(filteredFiles);
+  };
 
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Your Files</h1>
-        <div className="flex w-full max-w-sm items-center space-x-2">
+        <form
+          className="flex w-full max-w-sm items-center space-x-2"
+          method="get"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <Input
             type="text"
             placeholder="Search"
             onChange={(e) => setQuery(e.target.value)}
             value={query}
           />
-          <Button type="submit">Search</Button>
-        </div>
+          <Button type="submit" onClick={handleSearch}>
+            Search
+          </Button>
+        </form>
         <UploadForm />
       </div>
       <div className="mt-8 flex items-center justify-between">
@@ -52,7 +65,7 @@ const File = () => {
         <SelectBox type={type} setType={setType} />
       </div>
       <div className="mt-8">
-        <FileView file={files?.data} view={view} />
+        <FileView file={filteredFiles || files?.data} view={view} />
       </div>
     </>
   );

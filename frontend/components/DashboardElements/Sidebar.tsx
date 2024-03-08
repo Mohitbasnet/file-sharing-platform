@@ -140,7 +140,6 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ name }: SidebarProps) => {
-  console.log(name);
   const pathname = usePathname();
   navigation.forEach((item) => {
     item.current = item.href === pathname;
