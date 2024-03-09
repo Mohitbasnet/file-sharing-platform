@@ -20,7 +20,7 @@ const Testimonials = () => {
         <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
           <blockquote className="flex h-full flex-col justify-between bg-white dark:bg-gray-800 p-6 shadow-sm hover:shadow-lg rounded-lg transition-all duration-300 cursor-pointer sm:p-8">
             <div>
-              <div className="flex gap-0.5 text-green-500">
+              <div className="flex gap-0.5 text-orange-500">
                 <svg
                   className="h-5 w-5"
                   fill="currentColor"
@@ -68,7 +68,7 @@ const Testimonials = () => {
               </div>
 
               <div className="mt-4">
-                <p className="text-2xl font-bold text-rose-600 sm:text-3xl">
+                <p className="text-2xl font-bold text-indigo-600 sm:text-3xl">
                   Exceptional Security, Seamless Experience
                 </p>
 
@@ -88,7 +88,7 @@ const Testimonials = () => {
 
           <blockquote className="flex h-full flex-col justify-between bg-white dark:bg-gray-800 p-6 shadow-sm hover:shadow-lg rounded-lg transition-all duration-300 cursor-pointer sm:p-8">
             <div>
-              <div className="flex gap-0.5 text-green-500">
+              <div className="flex gap-0.5 text-orange-500">
                 <svg
                   className="h-5 w-5"
                   fill="currentColor"
@@ -136,7 +136,7 @@ const Testimonials = () => {
               </div>
 
               <div className="mt-4">
-                <p className="text-2xl font-bold text-rose-600 sm:text-3xl">
+                <p className="text-2xl font-bold text-indigo-600 sm:text-3xl">
                   Reliable and Efficient File Sharing
                 </p>
 
@@ -156,7 +156,7 @@ const Testimonials = () => {
 
           <blockquote className="flex h-full flex-col justify-between bg-white dark:bg-gray-800 p-6 shadow-sm hover:shadow-lg rounded-lg transition-all duration-300 cursor-pointer sm:p-8">
             <div>
-              <div className="flex gap-0.5 text-green-500">
+              <div className="flex gap-0.5 text-orange-500">
                 <svg
                   className="h-5 w-5"
                   fill="currentColor"
@@ -204,7 +204,7 @@ const Testimonials = () => {
               </div>
 
               <div className="mt-4">
-                <p className="text-2xl font-bold text-rose-600 sm:text-3xl">
+                <p className="text-2xl font-bold text-indigo-600 sm:text-3xl">
                   Trusted Partner for Data Security
                 </p>
 

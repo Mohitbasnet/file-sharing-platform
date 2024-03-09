@@ -1,9 +1,9 @@
-import Footer from "@/components/LandingElements/Footer";
-import Header from "@/components/LandingElements/Header";
-import HeroSection from "@/components/LandingElements/HeroSection";
-import Pricing from "@/components/LandingElements/Pricing";
-import StatComponent from "@/components/LandingElements/StatComponent";
-import Testimonials from "@/components/LandingElements/Testimonials";
+import Footer from "@/components/landing/Footer";
+import Header from "@/components/landing/Header";
+import HeroSection from "@/components/landing/HeroSection";
+import Pricing from "@/components/landing/Pricing";
+import StatComponent from "@/components/landing/StatComponent";
+import Testimonials from "@/components/landing/Testimonials";
 
 export default function Home() {
   return (

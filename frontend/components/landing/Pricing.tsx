@@ -4,7 +4,7 @@ const Pricing = () => {
   return (
     <section className="container mx-auto my-16">
       <div className="flex flex-col items-center">
-        <h1 className="text-4xl text-red-700 dark:text-red-500 font-bold text-center">
+        <h1 className="text-4xl font-bold text-center">
           Flexible Pricing Plans to Suit Every Need
         </h1>
 
@@ -15,7 +15,7 @@ const Pricing = () => {
       </div>
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center md:gap-8">
-          <div className="rounded-2xl border border-red-700 p-6 shadow-sm ring-1 ring-red-700 sm:order-last sm:px-8 lg:p-12">
+          <div className="rounded-2xl border border-indigo-700 p-6 shadow-sm ring-1 ring-indigo-700 sm:order-last sm:px-8 lg:p-12">
             <div className="text-center">
               <h2 className="text-lg font-medium text-gray-900 dark:text-gray-200">
                 Pro
@@ -42,7 +42,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -64,7 +64,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -86,7 +86,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -108,7 +108,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -130,7 +130,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -152,7 +152,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -170,7 +170,7 @@ const Pricing = () => {
 
             <a
               href="#"
-              className="mt-8 block rounded-full border border-red-600 bg-red-600 px-12 py-3 text-center text-sm font-medium text-white hover:bg-red-700 hover:ring-1 hover:ring-red-700 focus:outline-none focus:ring active:text-red-500"
+              className="mt-8 block rounded-full border border-indigo-600 bg-indigo-600 px-12 py-3 text-center text-sm font-medium text-white hover:bg-indigo-700 hover:ring-1 hover:ring-indigo-700 focus:outline-none focus:ring active:text-indigo-500"
             >
               Get Started
             </a>
@@ -203,7 +203,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -225,7 +225,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -247,7 +247,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -269,7 +269,7 @@ const Pricing = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-red-700"
+                  className="size-5 text-indigo-700"
                 >
                   <path
                     strokeLinecap="round"
@@ -287,7 +287,7 @@ const Pricing = () => {
 
             <a
               href="#"
-              className="mt-8 block rounded-full border border-red-600 bg-white px-12 py-3 text-center text-sm font-medium text-red-600 hover:ring-1 hover:ring-red-600 focus:outline-none focus:ring active:text-red-500"
+              className="mt-8 block rounded-full border border-indigo-600 bg-white px-12 py-3 text-center text-sm font-medium text-indigo-600 hover:ring-1 hover:ring-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
             >
               Get Started
             </a>

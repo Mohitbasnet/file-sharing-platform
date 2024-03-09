@@ -1,6 +1,6 @@
 "use client";
-import Sidebar from "@/components/DashboardElements/Sidebar";
-import Spinner from "@/components/DashboardElements/Spinner";
+import Sidebar from "@/components/elements/Sidebar";
+import Spinner from "@/components/elements/Spinner";
 import { apiGetUser } from "@/lib/apiRequests";
 import { useQuery } from "@tanstack/react-query";
 

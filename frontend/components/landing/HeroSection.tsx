@@ -8,7 +8,7 @@ const HeroSection = () => {
         <div className="mx-auto max-w-xl text-center">
           <h1 className="text-3xl font-extrabold sm:text-5xl">
             Secure Your Files
-            <strong className="font-extrabold text-red-700 sm:block">
+            <strong className="font-extrabold text-indigo-700 sm:block">
               {" "}
               Simplify Your Sharing with KeepSafe.{" "}
             </strong>
@@ -20,7 +20,11 @@ const HeroSection = () => {
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button variant="destructive" size={"lg"}>
+            <Button
+              variant="default"
+              className="bg-indigo-700 hover:bg-indigo-800"
+              size={"lg"}
+            >
               Get Started
             </Button>
 
