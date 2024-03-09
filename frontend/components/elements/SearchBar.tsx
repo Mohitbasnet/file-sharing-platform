@@ -16,7 +16,10 @@ const SearchBar = ({
   placeholder = "Search",
 }: SearchBarProps) => {
   return (
-    <div className="flex w-full max-w-sm items-center space-x-2">
+    <form
+      className="flex w-full max-w-sm items-center space-x-2"
+      onSubmit={(e) => e.preventDefault()}
+    >
       <Input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
@@ -26,12 +29,12 @@ const SearchBar = ({
       <Button
         className="dark:bg-zinc-700 dark:text-lime-50"
         variant={"default"}
-        type="button"
+        type="submit"
         onClick={() => onSubmit(query)}
       >
         Search
       </Button>
-    </div>
+    </form>
   );
 };
 
