@@ -45,7 +45,7 @@ const Trash = () => {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="mb-4 text-3xl font-bold">Deleted Files</h1>
+        <h1 className="mb-4 text-2xl font-bold">Deleted Files</h1>
         <SearchBar
           placeholder="Search deleted files"
           query={query}

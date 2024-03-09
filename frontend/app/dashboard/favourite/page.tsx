@@ -43,7 +43,7 @@ const Favourite = () => {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="mb-4 text-3xl font-bold">Your Favourites</h1>
+        <h1 className="mb-4 text-2xl font-bold">Your Favourites</h1>
         <SearchBar
           placeholder="Search in favourites"
           query={query}

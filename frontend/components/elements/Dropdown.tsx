@@ -70,7 +70,7 @@ const Dropdown = ({ onCopyLink, options, is_private }: DropdownProps) => {
             <span>Make Private</span>
           </DropdownMenuItem>
         )}
-        {options?.includes("copy") && (
+        {options?.includes("copy") && !is_private && (
           <DropdownMenuItem
             onClick={onCopyLink}
             className="cursor-pointer hover:bg-gray-100 flex items-center gap-2"
