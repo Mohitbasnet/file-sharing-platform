@@ -14,7 +14,6 @@ const File = () => {
   const [view, setView] = React.useState<"grid" | "list">("grid");
   const [filteredFiles, setFilteredFiles] = React.useState([] as any[]);
 
-  // Fetch files data
   const {
     isLoading,
     error,
@@ -27,8 +26,8 @@ const File = () => {
   const handleSearch = useCallback(
     (query: string) => {
       if (files) {
-        const filteredFiles = files.data.filter((file: any) =>
-          file.file_name.toLowerCase().includes(query.toLowerCase())
+        const filteredFiles = files?.data?.filter((file: any) =>
+          file?.file_name?.toLowerCase().includes(query.toLowerCase())
         );
         setFilteredFiles(filteredFiles);
       }
@@ -63,9 +62,14 @@ const File = () => {
       {filteredFiles.length === 0 ? (
         <Empty />
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="my-2 grid grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredFiles.map((file: any) => (
-            <FileCard key={file.id} file={file} view={view} />
+            <FileCard
+              key={file.id}
+              file={file}
+              view={view}
+              options={["favourite", "trash", "permission", "copy"]}
+            />
           ))}
         </div>
       )}

@@ -1,5 +1,5 @@
 import React from "react";
-import { HiOutlineListBullet, HiOutlineViewColumns } from "react-icons/hi2";
+import { HiOutlineListBullet, HiOutlineSquares2X2 } from "react-icons/hi2";
 
 interface Props {
   view: "grid" | "list";
@@ -14,7 +14,7 @@ const ViewSwitch = ({ view, setView }: Props) => {
           view === "grid" && "bg-white text-blue-500 shadow-sm"
         }`}
       >
-        <HiOutlineViewColumns className="text-lg" />
+        <HiOutlineSquares2X2 className="text-lg" />
         Grid View
       </button>
       <button

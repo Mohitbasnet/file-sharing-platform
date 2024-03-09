@@ -55,6 +55,9 @@ export const apiAddFile = async (data: any) => {
 export const apiGetFiles = () =>
   axios.get(`${ENDPOINTS.file}?own=yes`, createHeaders());
 
+export const apiTrashedFile = () =>
+  axios.get(`${ENDPOINTS.file}?is_trashed=yes`, createHeaders());
+
 export const apiUpdateFile = (data: any) =>
   axios.patch(`${ENDPOINTS.file}${data.id}/`, data, createHeaders());
 

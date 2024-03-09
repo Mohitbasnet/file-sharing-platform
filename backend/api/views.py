@@ -70,12 +70,18 @@ class FileViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         own = self.request.query_params.get("own", None)
+        trashed = self.request.query_params.get("is_trashed", None)
         org_id = self.request.query_params.get("org_id", None)
         queryset = File.objects.select_related("user", "organization")
 
         if own == "yes":
-            queryset = queryset.filter(Q(organization=None) & Q(user=self.request.user))
-
+            queryset = queryset.filter(
+                Q(organization=None) & Q(user=self.request.user) & Q(is_trashed=False)
+            )
+        if trashed == "yes":
+            queryset = queryset.filter(
+                Q(organization=None) & Q(user=self.request.user) & Q(is_trashed=True)
+            )
         if org_id:
             queryset = queryset.filter(organization__id=org_id)
 
