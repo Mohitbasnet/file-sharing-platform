@@ -36,11 +36,9 @@ const Trash = () => {
 
   useEffect(() => {
     handleSearch(query);
-  }, [query, handleSearch]);
+  }, [query, handleSearch, files]);
 
   if (isLoading) return <Spinner />;
-
-  console.log(files);
 
   return (
     <>

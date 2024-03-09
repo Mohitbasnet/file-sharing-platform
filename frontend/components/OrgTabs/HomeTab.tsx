@@ -3,7 +3,6 @@ interface HomeTabProps {
   org: any;
 }
 const HomeTab = ({ org }: HomeTabProps) => {
-  console.log("HomeTab", org);
   return <div>HomeTab</div>;
 };
 

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import {
   HiBars3CenterLeft,
@@ -23,18 +24,22 @@ const OrganizationCard = ({ org }: OrganizationCardProps) => {
         <p className="text-4xl font-bold">T</p>
       </div>
       <div className="flex items-center justify-between">
-        <p className="flex items-center gap-2">
-          <span>
-            <HiOutlineBriefcase className="text-lg" />
-          </span>
+        <div className="flex items-center gap-1">
+          <Image
+            src={org.creator.profile_image}
+            alt="avatar"
+            width={35}
+            height={35}
+            className="rounded-full object-cover"
+          />
           <span>{org.creator.full_name}</span>
-        </p>
-        <p className="flex items-center gap-2 text-gray-600">
+        </div>
+        <div className="flex items-center gap-2 text-gray-600">
           <span>
             <HiOutlineUsers className="text-lg" />
           </span>
           <span>{org.members?.length} Members</span>
-        </p>
+        </div>
       </div>
     </div>
   );

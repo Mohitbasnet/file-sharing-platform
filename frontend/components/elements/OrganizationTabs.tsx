@@ -3,6 +3,7 @@ import React from "react";
 interface OrganizationTabsProps {
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
+  isCreator?: boolean;
 }
 
 const OrganizationTabs: React.FC<OrganizationTabsProps> = ({

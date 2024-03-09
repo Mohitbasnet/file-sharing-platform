@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import OrganizationTabs from "@/components/elements/OrganizationTabs";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ import RecycleBinTab from "@/components/OrgTabs/RecycleBinTab";
 const SingleOrganization = () => {
   const { slug } = useParams();
   const orgName = slug[0];
-  const [selectedTab, setSelectedTab] = React.useState("files");
+  const [selectedTab, setSelectedTab] = React.useState("home");
   const {
     isLoading,
     error,
@@ -38,7 +38,7 @@ const SingleOrganization = () => {
         </div>
       </div>
       <div className="my-6">
-        {/* {selectedTab === "home" && <HomeTab org={org} />} */}
+        {selectedTab === "home" && <HomeTab org={org} />}
         {selectedTab === "files" && <FilesTab org={org} />}
         {selectedTab === "members" && <MembersTab org={org} />}
         {selectedTab === "recycle" && <RecycleBinTab org={org} />}

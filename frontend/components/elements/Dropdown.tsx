@@ -19,9 +19,17 @@ interface DropdownProps {
   onCopyLink?: () => void;
   options?: string[];
   is_private?: any;
+  isCreator?: boolean;
+  isOrg?: boolean;
 }
 
-const Dropdown = ({ onCopyLink, options, is_private }: DropdownProps) => {
+const Dropdown = ({
+  onCopyLink,
+  options,
+  is_private,
+  isCreator,
+  isOrg,
+}: DropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -46,13 +54,25 @@ const Dropdown = ({ onCopyLink, options, is_private }: DropdownProps) => {
             <span>Restore</span>
           </DropdownMenuItem>
         )}
-        {options?.includes("delete") && (
+        {options?.includes("delete") && isCreator && isOrg && (
           <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 flex items-center gap-2">
             <HiOutlineTrash className="text-lg" />
             <span>Delete Permanently</span>
           </DropdownMenuItem>
         )}
-        {options?.includes("trash") && (
+        {options?.includes("trash") && isCreator && isOrg && (
+          <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 flex items-center gap-2">
+            <HiOutlineTrash className="text-lg" />
+            <span>Trash</span>
+          </DropdownMenuItem>
+        )}
+        {options?.includes("delete") && !isOrg && (
+          <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 flex items-center gap-2">
+            <HiOutlineTrash className="text-lg" />
+            <span>Delete Permanently</span>
+          </DropdownMenuItem>
+        )}
+        {options?.includes("trash") && !isOrg && (
           <DropdownMenuItem className="cursor-pointer hover:bg-gray-100 flex items-center gap-2">
             <HiOutlineTrash className="text-lg" />
             <span>Trash</span>

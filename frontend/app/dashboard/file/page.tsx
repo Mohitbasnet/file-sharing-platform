@@ -46,7 +46,7 @@ const File = () => {
       <div className="flex items-center justify-between">
         <h1 className="mb-4 text-3xl font-bold">Your Files</h1>
         <SearchBar
-          placeholder="Search files"
+          placeholder="Type to search files"
           query={query}
           setQuery={setQuery}
           onSubmit={handleSearch}

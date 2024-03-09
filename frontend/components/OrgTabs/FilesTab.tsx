@@ -14,6 +14,16 @@ const FilesTab = ({ org }: FilesTabProps) => {
   const [query, setQuery] = React.useState("");
   const [view, setView] = React.useState<"grid" | "list">("grid");
   const [filteredFiles, setFilteredFiles] = React.useState([] as any[]);
+  const [isCreator, setIsCreator] = React.useState(false);
+
+  useEffect(() => {
+    const checkCreator = () => {
+      if (org?.creator.id === localStorage.getItem("user_id")) {
+        setIsCreator(true);
+      }
+    };
+    checkCreator();
+  }, [org]);
 
   const {
     isLoading,
@@ -55,7 +65,7 @@ const FilesTab = ({ org }: FilesTabProps) => {
           setQuery={setQuery}
           onSubmit={handleSearch}
         />
-        <UploadOrg />
+        <UploadOrg org_id={org?.id} />
       </div>
 
       {filteredFiles.length === 0 ? (
@@ -64,6 +74,8 @@ const FilesTab = ({ org }: FilesTabProps) => {
         <div className="my-2 grid grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredFiles.map((file: any) => (
             <FileCard
+              is_org={true}
+              isCreator={isCreator}
               key={file.id}
               file={file}
               view={view}

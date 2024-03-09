@@ -12,9 +12,17 @@ interface FileCardProps {
   file: any;
   view: "grid" | "list";
   options?: any[];
+  isCreator?: boolean;
+  is_org?: boolean;
 }
 
-const FileCard = ({ file, view, options }: FileCardProps) => {
+const FileCard = ({
+  file,
+  view,
+  options,
+  isCreator,
+  is_org,
+}: FileCardProps) => {
   const handleCopyLink = () => {
     navigator.clipboard.writeText(file.file);
     showToast("success", "Link copied to clipboard");
@@ -27,6 +35,8 @@ const FileCard = ({ file, view, options }: FileCardProps) => {
           <span>{file.file_name}</span>
         </p>
         <Dropdown
+          isOrg={is_org}
+          isCreator={isCreator}
           is_private={file.is_private}
           options={options}
           onCopyLink={handleCopyLink}

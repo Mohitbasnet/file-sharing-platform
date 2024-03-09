@@ -30,6 +30,9 @@ export const apiRegister = (data: any) => axios.post(ENDPOINTS.user, data);
 export const apiGetUser = () =>
   axios.get(`${ENDPOINTS.user}?own=true`, createHeaders());
 
+export const getUserByEmail = (email: string) =>
+  axios.get(`${ENDPOINTS.user}?email=${email}`, createHeaders());
+
 export const apiAddFile = async (data: any) => {
   try {
     const formData = new FormData();
@@ -97,4 +100,19 @@ export const apiGetOrganization = (slug: string) =>
   axios.get(`${ENDPOINTS.organization}${slug}/`, createHeaders());
 
 export const getFilesOfOrganization = (org_id: string) =>
-  axios.get(`${ENDPOINTS.file}?org_id=${org_id}`, createHeaders());
+  axios.get(
+    `${ENDPOINTS.file}?org_id=${org_id}&org_trashed=no`,
+    createHeaders()
+  );
+
+export const getTrashedFilesOfOrganization = (org_id: string) =>
+  axios.get(
+    `${ENDPOINTS.file}?org_id=${org_id}&org_trashed=yes`,
+    createHeaders()
+  );
+
+export const getOrganizationMembers = (org_id: string) =>
+  axios.get(`${ENDPOINTS.member}?org_id=${org_id}`, createHeaders());
+
+export const apiInviteUser = (data: any) =>
+  axios.post(ENDPOINTS.invitation, data, createHeaders());
