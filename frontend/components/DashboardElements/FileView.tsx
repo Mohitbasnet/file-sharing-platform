@@ -81,7 +81,7 @@ function FileView({ file, view }: FileViewProps) {
   return (
     <div>
       {view === "grid" ? (
-        <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {file?.map((f: any) => {
             if (f.is_trashed) return null;
             return (

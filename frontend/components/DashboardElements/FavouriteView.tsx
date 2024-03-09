@@ -17,11 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
-import {
-  apiDeleteFile,
-  apiRemoveFavorite,
-  apiUpdateFile,
-} from "@/lib/apiRequests";
+import { apiRemoveFavorite } from "@/lib/apiRequests";
 import showToast from "@/lib/toastNotification";
 
 interface FavouriteViewProps {
