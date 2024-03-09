@@ -63,7 +63,7 @@ const UploadForm = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <span className="flex gap-1 items-center bg-gray-100 px-4 py-2 rounded">
+        <span className="flex gap-1 items-center bg-gray-100 dark:bg-zinc-700 px-4 py-2 rounded">
           <PlusIcon />
           <span>Upload File</span>
         </span>
