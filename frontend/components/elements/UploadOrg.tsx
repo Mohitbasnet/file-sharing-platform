@@ -10,33 +10,24 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import showToast from "@/lib/toastNotification";
-import { apiAddFile } from "@/lib/apiRequests";
+import { apiAddOrganizationFile } from "@/lib/apiRequests";
 import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
 
-interface UploadFormProps {
-  is_org?: boolean;
+interface UploadOrgProps {
   org_id?: string;
 }
 
-const UploadForm = (
-  { is_org = false, org_id }: UploadFormProps = { is_org: false }
-) => {
+const UploadOrg = ({ org_id }: UploadOrgProps) => {
   const queryClient = useQueryClient();
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
-  const [isPrivate, setIsPrivate] = useState(false);
 
   const handleFileChange = (e: any) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
-  };
-
-  const handleSwitchChange = () => {
-    setIsPrivate((previsPrivate) => !previsPrivate);
   };
 
   const handleUpload = async () => {
@@ -50,10 +41,9 @@ const UploadForm = (
       return;
     }
     try {
-      const response = await apiAddFile({
+      const response = await apiAddOrganizationFile({
         user_id: localStorage.getItem("user_id"),
         file_name: fileName,
-        is_private: isPrivate,
         org_id: org_id,
         file,
       });
@@ -81,7 +71,7 @@ const UploadForm = (
           <DialogTitle>
             <p className="text-2xl py-3">Upload your file here</p>
             <p className="py-2 font-normal text-sm">
-              Your file will be accessible by anyone unless you make it private.
+              Your file will be accessible by everyone in the organization.
             </p>
           </DialogTitle>
           <DialogDescription>
@@ -104,16 +94,6 @@ const UploadForm = (
                   <Label htmlFor="picture">File</Label>
                   <Input id="picture" type="file" onChange={handleFileChange} />
                 </div>
-                {!is_org && (
-                  <div className="flex items-center gap-1.5">
-                    <Label>Public</Label>
-                    <Switch
-                      checked={isPrivate}
-                      onCheckedChange={handleSwitchChange}
-                    />
-                    <Label>Private</Label>
-                  </div>
-                )}
 
                 <div className="flex justify-end">
                   <DialogClose>
@@ -135,4 +115,4 @@ const UploadForm = (
   );
 };
 
-export default UploadForm;
+export default UploadOrg;

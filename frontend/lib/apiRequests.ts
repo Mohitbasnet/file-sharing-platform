@@ -37,8 +37,6 @@ export const apiAddFile = async (data: any) => {
     formData.append("file", data.file);
     formData.append("file_name", data.file_name);
     if (data.is_private) formData.append("is_private", data.is_private);
-    if (data.organization_id)
-      formData.append("organization_id", data.organization_id);
 
     const response = await axios.post(
       ENDPOINTS.file,
@@ -46,6 +44,25 @@ export const apiAddFile = async (data: any) => {
       createHeaders()
     );
 
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const apiAddOrganizationFile = async (data: any) => {
+  try {
+    const formData = new FormData();
+    formData.append("user_id", data.user_id);
+    formData.append("file_name", data.file_name);
+    formData.append("organization_id", data.org_id);
+    formData.append("file", data.file);
+
+    const response = await axios.post(
+      ENDPOINTS.file,
+      formData,
+      createHeaders()
+    );
     return response.data;
   } catch (error) {
     throw error;
