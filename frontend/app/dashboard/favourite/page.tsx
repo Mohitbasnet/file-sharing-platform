@@ -65,7 +65,7 @@ const Favourite = () => {
               key={file.id}
               file={file.file}
               view={view}
-              options={["favourite", "trash", "permission", "copy"]}
+              options={["unfavourite", "copy"]}
             />
           ))}
         </div>
