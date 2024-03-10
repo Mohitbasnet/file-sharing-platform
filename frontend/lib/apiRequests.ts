@@ -102,6 +102,9 @@ export const apiGetOrganization = (slug: string) =>
 export const apiCreateOrganization = (data: any) =>
   axios.post(ENDPOINTS.organization, data, createHeaders());
 
+export const apiDeleteOrganization = (slug: string) =>
+  axios.delete(`${ENDPOINTS.organization}${slug}/`, createHeaders());
+
 export const getFilesOfOrganization = (org_id: string) =>
   axios.get(
     `${ENDPOINTS.file}?org_id=${org_id}&org_trashed=no`,

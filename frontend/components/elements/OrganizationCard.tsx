@@ -21,7 +21,7 @@ const OrganizationCard = ({ org }: OrganizationCardProps) => {
         </p>
       </div>
       <div className="bg-slate-200 h-40 w-full my-3 rounded-xl px-8 flex items-center justify-center">
-        <p className="text-4xl font-bold">T</p>
+        <p className="text-4xl font-bold">{org.name.charAt(0).toUpperCase()}</p>
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">

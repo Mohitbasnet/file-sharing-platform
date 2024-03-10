@@ -5,6 +5,8 @@ from users.permissions import CustomPermission
 from .serializers import *
 from .models import *
 from django.db.models import Q
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
@@ -20,6 +22,16 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(members__user=self.request.user)
 
         return queryset
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.members.count() > 1:
+            return Response(
+                {"detail": "You can't delete an organization with members"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class OrganizationMemberViewSet(viewsets.ModelViewSet):
