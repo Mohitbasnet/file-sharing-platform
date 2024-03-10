@@ -69,6 +69,7 @@ class Invitation(models.Model):
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    message = models.TextField(_("Message"), blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
         _("Status"), max_length=255, choices=INVIATION_STATUS, default="pending"

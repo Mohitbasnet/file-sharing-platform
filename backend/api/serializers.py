@@ -46,7 +46,14 @@ class OrganizationMemberSerializer(ModelSerializer):
 
     class Meta:
         model = OrganizationMember
-        fields = ["id", "user", "user_id", "organization_id", "role", "created_at"]
+        fields = [
+            "id",
+            "user",
+            "user_id",
+            "organization_id",
+            "role",
+            "created_at",
+        ]
 
 
 class InvitationSerializer(ModelSerializer):
@@ -66,6 +73,7 @@ class InvitationSerializer(ModelSerializer):
             "user",
             "user_id",
             "status",
+            "message",
             "organization",
             "organization_id",
             "created_at",

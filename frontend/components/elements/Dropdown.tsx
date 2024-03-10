@@ -54,7 +54,6 @@ const Dropdown = ({
         queryClient.invalidateQueries("favourites" as InvalidateQueryFilters);
       }
     } catch (error: any) {
-      console.log(error.response.data.non_field_errors[0]);
       if (
         error.response.data.non_field_errors[0] ===
         "The fields user_id, file_id must make a unique set."
@@ -68,7 +67,6 @@ const Dropdown = ({
   const handleUnfavourite = async () => {
     try {
       const res = await apiRemoveFavorite(fav_id);
-      console.log(res);
       if (res.status === 204) {
         showToast("success", "File removed from favourites.");
         queryClient.invalidateQueries("favourites" as InvalidateQueryFilters);

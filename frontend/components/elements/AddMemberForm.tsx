@@ -1,20 +1,32 @@
 import React from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { Button } from "../ui/button";
 import { HiMiniPlus } from "react-icons/hi2";
 import { Input } from "../ui/input";
-import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
 import { getUserByEmail, apiInviteUser } from "@/lib/apiRequests";
 import showToast from "@/lib/toastNotification";
-import Image from "next/image";
+import { Loader2 } from "lucide-react";
+
+export function ButtonLoading() {
+  return (
+    <Button disabled>
+      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      Please wait
+    </Button>
+  );
+}
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "../ui/textarea";
 
 interface AddMemberFormProps {
   org: any;
@@ -22,7 +34,11 @@ interface AddMemberFormProps {
 
 const AddMemberForm = ({ org }: AddMemberFormProps) => {
   const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState(
+    "I would like to invite you to our organization."
+  );
   const [searching, setSearching] = React.useState(false);
+  const [user_id, setUser_id] = React.useState("");
 
   const {
     isLoading,
@@ -35,96 +51,102 @@ const AddMemberForm = ({ org }: AddMemberFormProps) => {
     enabled: false,
   });
 
-  const handleSearch = () => {
-    setSearching(true);
-    refetch();
-  };
-
-  const handleInvite = async (user_id: string, name: string) => {
+  const handleInvite = async () => {
+    if (!email) {
+      showToast("error", "Email is required.");
+      return;
+    }
+    if (!message) {
+      showToast("error", "Message is required.");
+      return;
+    }
     try {
-      const response = await apiInviteUser({
-        user_id,
-        organization_id: org.id,
-      });
-      console.log(response);
-      if (response.status === 201) {
-        showToast("success", "Invite sent to " + name);
-        setEmail("");
+      setSearching(true);
+      const res = await refetch();
+      if (res?.data?.data[0].id) {
+        setUser_id(res?.data?.data[0].id);
+        const response = await apiInviteUser({
+          user_id: res?.data?.data[0].id,
+          organization_id: org.id,
+          message,
+        });
+        if (response.status === 201) {
+          showToast("success", "Invite sent to " + email);
+          setEmail("");
+          setMessage("");
+        }
+        setSearching(false);
+      }
+      if (res.status == "error") {
+        showToast("error", "User not found.");
+        setSearching(false);
+        return;
       }
     } catch (error: any) {
       if (
         error.response.data.non_field_errors[0] ===
         "The fields user_id, organization_id must make a unique set."
       ) {
-        showToast("error", "User already invited.");
+        showToast("error", "You have already sent an invite to this user.");
       } else {
-        showToast("error", "Something went wrong. Please try again.");
+        showToast("error", "Something went wrong. Please try again later.");
       }
+      setSearching(false);
     }
-    setSearching(false);
-    setEmail("");
   };
 
   return (
-    <Sheet>
-      <SheetTrigger>
-        <span className="flex items-center gap-1 bg-zinc-900 text-white px-3 py-2 rounded">
+    <Dialog>
+      <DialogTrigger asChild>
+        <span className="flex items-center gap-1 bg-zinc-900 text-white px-3 py-2 rounded cursor-pointer">
           <HiMiniPlus className="text-xl" />
           <span>Add Member</span>
         </span>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Invite a member to join</SheetTitle>
-          <SheetDescription>
-            Enter the email address of the person you want to invite to join the
-            organization.
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle>Invite Member</DialogTitle>
+          <DialogDescription>
+            Invite a member to join the organization by entering their email.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-3 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="email" className="text-right">
+              Email
+            </Label>
             <Input
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              placeholder="Type email address"
-              className="mt-5 w-full border rounded-lg p-2"
+              className="col-span-3"
             />
-            <Button
-              onClick={handleSearch}
-              disabled={!email}
-              className="mt-3 flex items-center gap-2 hover:ring-1 ring-gray-300 transition-all ease-in-out duration-300"
-              variant="default"
-            >
-              <HiOutlineMagnifyingGlass className="text-xl" />
-              <span>Search User</span>
+          </div>
+          <div className="grid grid-cols-4 gap-4">
+            <Label htmlFor="message" className="text-right">
+              Message
+            </Label>
+            <Textarea
+              id="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="col-span-3"
+              placeholder="Type your message here."
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          {searching ? (
+            <Button disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
             </Button>
-            {isLoading && <span>Loading...</span>}
-            {error && showToast("error", "User not found. Please try again.")}
-            {member &&
-              member?.data?.map((user: any) => (
-                <span key={user.id} className="flex items-center gap-2 mt-3">
-                  <Image
-                    height={40}
-                    width={40}
-                    src={user?.profile_image}
-                    alt="avatar"
-                    className="rounded-full object-cover"
-                  />
-                  <span className="flex flex-col">
-                    <span className="text-lg font-semibold">
-                      {user.full_name}
-                    </span>
-                  </span>
-                  <span
-                    className="ml-auto cursor-pointer flex items-center gap-1 border rounded px-2 py-1.5"
-                    onClick={() => handleInvite(user.id, user.full_name)}
-                  >
-                    <HiMiniPlus />
-                    <span>Invite</span>
-                  </span>
-                </span>
-              ))}
-          </SheetDescription>
-        </SheetHeader>
-      </SheetContent>
-    </Sheet>
+          ) : (
+            <Button onClick={handleInvite}>Invite User</Button>
+          )}
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

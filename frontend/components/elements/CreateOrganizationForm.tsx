@@ -28,7 +28,6 @@ const CreateOrganizationForm = () => {
         name,
         creator_id: localStorage.getItem("user_id"),
       });
-      console.log(res);
       if (res.status === 201) {
         showToast("success", "Organization created successfully.");
         setName("");

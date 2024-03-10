@@ -11,7 +11,6 @@ interface OrganizationCardProps {
 }
 
 const OrganizationCard = ({ org }: OrganizationCardProps) => {
-  //   console.log(org);
   return (
     <div className="border rounded-lg p-3">
       <div className="flex items-center justify-between">

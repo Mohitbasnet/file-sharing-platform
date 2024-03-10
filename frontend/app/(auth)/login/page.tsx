@@ -33,7 +33,6 @@ const Login = () => {
 
     try {
       const response = await apiLogin({ email, password });
-      console.log(response);
       if (response.status === 200) {
         const { access, refresh } = response.data;
         setCookie("access", access, {
