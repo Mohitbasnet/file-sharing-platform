@@ -61,12 +61,14 @@ const AddMemberForm = ({ org }: AddMemberFormProps) => {
         showToast("error", "Something went wrong. Please try again.");
       }
     }
+    setSearching(false);
+    setEmail("");
   };
 
   return (
     <Sheet>
       <SheetTrigger>
-        <span className="flex items-center gap-1 bg-zinc-900 text-white px-3 py-2 rounded-lg">
+        <span className="flex items-center gap-1 bg-zinc-900 text-white px-3 py-2 rounded">
           <HiMiniPlus className="text-xl" />
           <span>Add Member</span>
         </span>

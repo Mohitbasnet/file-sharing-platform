@@ -14,6 +14,7 @@ interface FileCardProps {
   options?: any[];
   isCreator?: boolean;
   is_org?: boolean;
+  fav_id?: string;
 }
 
 const FileCard = ({
@@ -22,11 +23,13 @@ const FileCard = ({
   options,
   isCreator,
   is_org,
+  fav_id,
 }: FileCardProps) => {
   const handleCopyLink = () => {
     navigator.clipboard.writeText(file.file);
     showToast("success", "Link copied to clipboard");
   };
+
   return (
     <div className="border rounded-lg p-3">
       <div className="flex items-center justify-between">
@@ -35,6 +38,8 @@ const FileCard = ({
           <span>{file.file_name}</span>
         </p>
         <Dropdown
+          fav_id={fav_id}
+          file_id={file.id}
           isOrg={is_org}
           isCreator={isCreator}
           is_private={file.is_private}

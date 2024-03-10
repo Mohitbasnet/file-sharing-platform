@@ -81,7 +81,7 @@ export const apiTrashedFile = () =>
 export const apiUpdateFile = (data: any) =>
   axios.patch(`${ENDPOINTS.file}${data.id}/`, data, createHeaders());
 
-export const apiDeleteFile = (id: string) =>
+export const apiDeleteFile = (id: string | undefined) =>
   axios.delete(`${ENDPOINTS.file}${id}/`, createHeaders());
 
 export const apiGetFavorites = () =>
@@ -90,7 +90,7 @@ export const apiGetFavorites = () =>
 export const apiAddFavorite = (data: any) =>
   axios.post(ENDPOINTS.favourite, data, createHeaders());
 
-export const apiRemoveFavorite = (id: string) =>
+export const apiRemoveFavorite = (id: string | undefined) =>
   axios.delete(`${ENDPOINTS.favourite}${id}/`, createHeaders());
 
 export const apiGetOrganizations = () =>

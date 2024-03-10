@@ -18,7 +18,7 @@ const Favourite = () => {
     error,
     data: favorites,
   } = useQuery<any>({
-    queryKey: ["files"],
+    queryKey: ["favourites"],
     queryFn: () => apiGetFavorites(),
   });
 
@@ -62,6 +62,7 @@ const Favourite = () => {
         <div className="my-2 grid grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredFiles.map((file: any) => (
             <FileCard
+              fav_id={file.id}
               key={file.id}
               file={file.file}
               view={view}

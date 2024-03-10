@@ -5,9 +5,16 @@ import Spinner from "../elements/Spinner";
 import ViewSwitch from "../elements/ViewSwitch";
 import SearchBar from "../elements/SearchBar";
 import Empty from "../elements/Empty";
-import { Button } from "../ui/button";
-import { HiMiniPlus } from "react-icons/hi2";
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 import AddMemberForm from "../elements/AddMemberForm";
+import MemberCard from "../elements/MemberCard";
 
 interface MembersTabProps {
   org: any;
@@ -57,13 +64,8 @@ const MembersTab = ({ org }: MembersTabProps) => {
   return (
     <>
       <div className="flex items-center justify-between">
-        {members && members.data.length !== 0 && (
-          <div className="my-4">
-            <ViewSwitch view={view} setView={setView} />
-          </div>
-        )}
         <SearchBar
-          placeholder="Search files"
+          placeholder="Search members"
           query={query}
           setQuery={setQuery}
           onSubmit={handleSearch}
@@ -77,10 +79,22 @@ const MembersTab = ({ org }: MembersTabProps) => {
       {filteredMembers.length === 0 ? (
         <Empty />
       ) : (
-        <div className="my-2 grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredMembers.map((member: any) => (
-            <h1 key={member.id}>{member.user.full_name}</h1>
-          ))}
+        <div className="my-10">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="">Full Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredMembers.map((member: any) => (
+                <MemberCard key={member.id} member={member} />
+              ))}
+            </TableBody>
+          </Table>
         </div>
       )}
     </>
