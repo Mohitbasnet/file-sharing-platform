@@ -8,7 +8,7 @@ import Spinner from "@/components/elements/Spinner";
 import Empty from "@/components/elements/Empty";
 import OrganizationCard from "@/components/elements/OrganizationCard";
 import Link from "next/link";
-
+import CreateOrganizationForm from "@/components/elements/CreateOrganizationForm";
 const Organization = () => {
   const [query, setQuery] = React.useState("");
   const [view, setView] = React.useState<"grid" | "list">("grid");
@@ -55,11 +55,16 @@ const Organization = () => {
           onSubmit={handleSearch}
         />
       </div>
-      {organizations && organizations.data.length !== 0 && (
+      <div className="flex items-center justify-between">
         <div className="my-4">
-          <ViewSwitch view={view} setView={setView} />
+          {organizations && organizations.data.length !== 0 && (
+            <ViewSwitch view={view} setView={setView} />
+          )}
         </div>
-      )}
+        <div className="flex justify-end">
+          <CreateOrganizationForm />
+        </div>
+      </div>
       {filteredOrganizations.length === 0 ? (
         <Empty />
       ) : (

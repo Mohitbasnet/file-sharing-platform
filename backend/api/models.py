@@ -9,10 +9,10 @@ class Organization(models.Model):
     id = models.CharField(
         _("ID"), primary_key=True, max_length=22, default=shortuuid.uuid, editable=False
     )
-    name = models.CharField(_("Name"), max_length=255)
+    name = models.CharField(_("Name"), max_length=255, unique=True)
     slug = models.SlugField(_("Slug"), max_length=255, blank=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    creator = models.OneToOneField(User, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
