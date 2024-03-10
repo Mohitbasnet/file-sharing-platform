@@ -114,5 +114,8 @@ export const getTrashedFilesOfOrganization = (org_id: string) =>
 export const getOrganizationMembers = (org_id: string) =>
   axios.get(`${ENDPOINTS.member}?org_id=${org_id}`, createHeaders());
 
+export const apiKickMember = (id: string) =>
+  axios.delete(`${ENDPOINTS.member}${id}/`, createHeaders());
+
 export const apiInviteUser = (data: any) =>
   axios.post(ENDPOINTS.invitation, data, createHeaders());

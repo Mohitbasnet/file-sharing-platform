@@ -31,7 +31,9 @@ class OrganizationMemberViewSet(viewsets.ModelViewSet):
         queryset = OrganizationMember.objects.select_related("user", "organization")
 
         if org_id:
-            queryset = queryset.filter(organization__id=org_id)
+            queryset = queryset.filter(organization__id=org_id).filter(
+                ~Q(user=self.request.user)
+            )
 
         return queryset
 

@@ -2,7 +2,6 @@ import { getOrganizationMembers } from "@/lib/apiRequests";
 import { useQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect } from "react";
 import Spinner from "../elements/Spinner";
-import ViewSwitch from "../elements/ViewSwitch";
 import SearchBar from "../elements/SearchBar";
 import Empty from "../elements/Empty";
 import {
@@ -21,7 +20,6 @@ interface MembersTabProps {
 }
 const MembersTab = ({ org }: MembersTabProps) => {
   const [query, setQuery] = React.useState("");
-  const [view, setView] = React.useState<"grid" | "list">("grid");
   const [filteredMembers, setFilteredMembers] = React.useState([] as any[]);
   const [isCreator, setIsCreator] = React.useState(false);
 
@@ -91,7 +89,12 @@ const MembersTab = ({ org }: MembersTabProps) => {
             </TableHeader>
             <TableBody>
               {filteredMembers.map((member: any) => (
-                <MemberCard key={member.id} member={member} />
+                <MemberCard
+                  membershipId={member.id}
+                  isCreator={isCreator}
+                  key={member.id}
+                  member={member}
+                />
               ))}
             </TableBody>
           </Table>

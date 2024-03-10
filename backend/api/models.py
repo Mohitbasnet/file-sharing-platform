@@ -54,6 +54,7 @@ class OrganizationMember(models.Model):
 
     class Meta:
         unique_together = ("user", "organization")
+        ordering = ["user__full_name"]
 
 
 class Invitation(models.Model):
