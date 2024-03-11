@@ -4,6 +4,7 @@ from users.models import CustomUser as User
 import shortuuid
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
+from django.utils import timezone
 
 
 class Organization(models.Model):
@@ -108,6 +109,7 @@ class File(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     is_trashed = models.BooleanField(_("Is Trashed"), default=False)
+    date_trashed = models.DateTimeField(_("Date Trashed"), null=True, blank=True)
 
     def __str__(self):
         return self.file.name
@@ -117,6 +119,7 @@ class File(models.Model):
         self.file_type = self.file.name.split(".")[-1]
 
         if self.is_trashed:
+            self.date_trashed = timezone.now()
             fav = Favourite.objects.filter(file=self)
             if fav.exists():
                 fav.delete()
