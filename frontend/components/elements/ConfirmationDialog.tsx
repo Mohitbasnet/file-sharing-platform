@@ -16,6 +16,7 @@ interface ConfirmationDialogProps {
   btnName: string;
   confirmTitle: string;
   confirmDescription: string;
+  variant?: any;
 }
 
 const ConfirmationDialog = ({
@@ -23,26 +24,26 @@ const ConfirmationDialog = ({
   btnName,
   confirmTitle,
   confirmDescription,
+  variant = "destructive",
 }: ConfirmationDialogProps) => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <span>
-          <Button variant="destructive">{btnName}</Button>
+          <Button variant={variant}>{btnName}</Button>
         </span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{confirmTitle}</DialogTitle>
           <DialogDescription>{confirmDescription}</DialogDescription>
-          <DialogDescription>This action can not be undone.</DialogDescription>
         </DialogHeader>
         <div className="flex justify-end gap-2">
-          <Button variant="destructive" onClick={onConfirm}>
-            Delete
+          <Button variant={variant} onClick={onConfirm}>
+            Confirm
           </Button>
-          <Button variant="secondary">
-            <DialogClose>Cancel</DialogClose>
+          <Button variant="ghost">
+            <DialogClose id="dialogCloseBtn">Cancel</DialogClose>
           </Button>
         </div>
       </DialogContent>

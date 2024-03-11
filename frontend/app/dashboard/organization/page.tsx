@@ -61,7 +61,7 @@ const Organization = () => {
             <ViewSwitch view={view} setView={setView} />
           )}
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end mt-4">
           <CreateOrganizationForm />
         </div>
       </div>

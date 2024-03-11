@@ -126,6 +126,17 @@ export const apiKickMember = (id: string) =>
 export const apiInviteUser = (data: any) =>
   axios.post(ENDPOINTS.invitation, data, createHeaders());
 
-// http://127.0.0.1:8000/api/invitation/?my_invitations=true
 export const apiGetInvitations = () =>
   axios.get(`${ENDPOINTS.invitation}?my_invitations=true`, createHeaders());
+
+export const apiUpdateInvitation = (data: any) =>
+  axios.patch(
+    `${ENDPOINTS.invitation}${data.id}/`,
+    {
+      status: data.status,
+    },
+    createHeaders()
+  );
+
+export const apiDeleteInvitation = (id: string) =>
+  axios.delete(`${ENDPOINTS.invitation}${id}/`, createHeaders());

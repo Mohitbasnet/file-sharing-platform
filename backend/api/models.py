@@ -3,6 +3,7 @@ from django.db import models
 from users.models import CustomUser as User
 import shortuuid
 from django.utils.text import slugify
+from django.db.utils import IntegrityError
 
 
 class Organization(models.Model):
@@ -81,9 +82,12 @@ class Invitation(models.Model):
     def save(self, *args, **kwargs):
         super(Invitation, self).save(*args, **kwargs)
         if self.status == "accepted":
-            OrganizationMember.objects.create(
-                user=self.user, organization=self.organization
-            )
+            try:
+                OrganizationMember.objects.create(
+                    user=self.user, organization=self.organization
+                )
+            except IntegrityError:
+                pass
 
     class Meta:
         unique_together = ("user", "organization")

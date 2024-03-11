@@ -7,6 +7,7 @@ import {
 } from "react-icons/hi2";
 import Dropdown from "./Dropdown";
 import showToast from "@/lib/toastNotification";
+import Image from "next/image";
 
 interface FileCardProps {
   file: any;
@@ -47,7 +48,17 @@ const FileCard = ({
           onCopyLink={handleCopyLink}
         />
       </div>
-      <div className="bg-slate-200 h-40 w-full my-3 rounded-xl px-8"></div>
+      {!["jpg", "jpeg", "png", "webp"].includes(file?.file_type) ? (
+        <div className="bg-slate-200 h-40 w-full my-3 rounded-xl px-8"></div>
+      ) : (
+        <Image
+          height={160}
+          width={160}
+          src={file.file}
+          alt={file.file_name}
+          className="h-40 w-full object-cover rounded-xl my-3"
+        />
+      )}
       <div className="flex items-center justify-between">
         <p className="flex items-center gap-2">
           <HiOutlineDocument className="text-lg" />
