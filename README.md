@@ -26,7 +26,7 @@ KeepSafe is a versatile file-sharing platform designed to provide users with a s
 
 ## Environment Variables
 
-To run the project locally, you'll need to set up the following environment variables in a `.env` file:
+To run the project locally, you'll need to set up the following environment variables in a `.env` file in backend:
 
 ```plaintext
 SECRET_KEY = <your-secret-key>
