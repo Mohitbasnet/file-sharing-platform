@@ -12,7 +12,10 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "00fc-2407-1400-aa33-990-fdcb-e2cf-9c9d-99d9.ngrok-free.app",
+    "127.0.0.1",
+]
 
 INSTALLED_APPS = [
     "api",
