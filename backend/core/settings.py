@@ -14,7 +14,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 INSTALLED_APPS = [
     "api",
     "users",
@@ -89,11 +88,12 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
-CORS_ALLOWED_ORIGINS = [
-    os.getenv("ORIGIN_1"),
-    os.getenv("ORIGIN_2"),
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://*",
+#     "https://*",
+# ]
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = "core.urls"
 
