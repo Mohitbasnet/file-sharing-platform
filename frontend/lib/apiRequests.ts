@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = " http://127.0.0.1:8000/";
+const API_URL = "https://d94b-2407-1400-aa33-990-fdcb-e2cf-9c9d-99d9.ngrok-free.app";
 
 const ENDPOINTS = {
   token: API_URL + "user/token/",
