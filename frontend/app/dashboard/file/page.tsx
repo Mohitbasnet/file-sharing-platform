@@ -22,7 +22,7 @@ const File = () => {
     queryKey: ["files"],
     queryFn: () => apiGetFiles(),
   });
-
+  console.log(files);
   const handleSearch = useCallback(
     (query: string) => {
       if (files) {
@@ -63,7 +63,7 @@ const File = () => {
         <Empty />
       ) : (
         <div className="my-2 grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredFiles.map((file: any) => (
+          {filteredFiles?.map((file: any) => (
             <FileCard
               key={file.id}
               file={file}
